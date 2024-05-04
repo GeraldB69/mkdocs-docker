@@ -1,12 +1,14 @@
-Dans ce repo j'utilise MkDocs et Docker pour mettre en place une documentation le plus simplement du monde !
+# MkDocs et Docker
 
-MkDocs est un excellent moyen pour produire rapidement de la documentation.  
+Dans ce repo, j'utilise MkDocs et Docker pour mettre en place une documentation le plus simplement du monde !
+
+[MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/) est un excellent moyen pour produire rapidement de la documentation.  
 Sans trop rentrer dans les détails, c'est un générateur de site statique en Python. On écrit la documentation en MarkDown et la configuration tient dans un fichier YAML.
 
 
-# Les éléments indispensables...
+## Les éléments indispensables...
 
-## Fichier Dockerfile
+### Fichier Dockerfile
 
 ```
 # On télécharge la dernière image
@@ -15,13 +17,13 @@ FROM squidfunk/mkdocs-material:latest
 # Soit on installe les extensions 1 par 1...
 RUN pip install mkdocs-mermaid2-plugin
 
-# ...soit on installe les extension via un fichier requirements.txt.
+# ...soit on installe les extensions via un fichier requirements.txt.
 ADD requirements.txt .
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 ```
 
-## Fichier requirements.txt
+### Fichier requirements.txt
 
 Si c'est l'option retenue, c'est là que doivent être ajoutées les extensions nécessaires (avec éventuellement la version pour éviter les surprises):
 
@@ -30,7 +32,7 @@ mkdocs-mermaid2-plugin==1.1.1
 ...
 ```
 
-## Fichier mkdocs.yml
+### Fichier mkdocs.yml
 
 C'est l'unique fichier de configuration ! Version commentée en français [ici](https://github.com/ericECmorlaix/base_mkdocs_material/blob/main/mkdocs.yml)
 
@@ -41,28 +43,26 @@ site_name: Ma super doc !
 
 theme:
   name: 'material'
-
-...
 ```
 
-## Dossier /docs
+### Dossier /docs
 
 C'est le répertoire qui va accueillir les fichiers de la documentation.  
 Par défaut, c'est dans le dossier `docs` mais comme toujours, on peut modifier ça...
 
 
-# Rendre sa documentation accessible
+## Rendre sa documentation accessible
 
 Deux options sont possibles pour lire la documentation...
 
-1. En local
+### 1. En local
 
-C'est la solution rapide et pratique car on peut voir les changements en temps réel mais c'est complètement déconseillé de lancer le site en production de cette manière !  
+C'est la solution rapide et pratique car on peut voir les changements en temps réel mais c'est déconseillé de lancer le site en production de cette manière !  
 A la racine du projet, voici la ligne qu'il faut lancer:
 
 `docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material`
 
-### Détail:
+#### Détails:
 
 Les options de base: 
 
@@ -81,7 +81,7 @@ On peut aussi ajouter:
 
 Pour la doc officielle, c'est par [ici](https://docs.docker.com/reference/cli/docker/container/run/)
 
-2. En production
+### 2. En production
 
 A la différence de la ligne précédente, cette ligne va uniquement générer la version "statique" du site dans le dossier... `/site`.  
 Ensuite, le contenu de ce dossier devra être copié sur le serveur de prod. Soit de manière "artisanale" (scp, ftp, sftp,...), soit de manière automatique (Script bash, Actions GitHub,...)
@@ -89,7 +89,7 @@ Ensuite, le contenu de ce dossier devra être copié sur le serveur de prod. Soi
 `docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build`
 
 
-# Exemple de structure finale
+## Exemple de structure finale
 
 ```
 .

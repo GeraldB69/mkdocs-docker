@@ -5,6 +5,7 @@ Dans ce repo, j'utilise MkDocs et Docker pour mettre en place une documentation 
 [MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/) est un excellent moyen pour produire rapidement de la documentation.  
 Sans trop rentrer dans les détails, c'est un générateur de site statique en Python. On écrit la documentation en MarkDown et la configuration tient dans un fichier YAML.
 
+![MkDocs](mkdocs.png)
 
 ## Les éléments indispensables...
 

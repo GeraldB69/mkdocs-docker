@@ -87,7 +87,7 @@ Pour la doc officielle, c'est par [ici](https://docs.docker.com/reference/cli/do
 
 A la différence de la ligne précédente, cette ligne va uniquement générer la version "statique" du site dans le dossier... `/site`.  
 
-Le contenu de ce dossier devra être copié sur le serveur de prod. Soit de manière "artisanale" (scp, ftp, sftp,...), soit de manière automatique (GitHub Pages, par exemple)
+Le contenu de ce dossier devra être copié sur le serveur de prod. Soit de manière "artisanale" (scp, ftp, sftp,...), soit de manière automatique ([GitHub Pages](https://geraldb69.github.io/mkdocs-docker/), par exemple)
 
 `docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build`
 

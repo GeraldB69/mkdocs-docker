@@ -1,6 +1,6 @@
-# MkDocs et Docker
+# mkdocs-docker
 
-Dans ce repo, j'utilise MkDocs et Docker pour mettre en place une documentation le plus simplement du monde !
+Dans ce repo, j'utilise MkDocs et Docker pour mettre en place une documentation avec le strict minimum !
 
 [MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/) est un excellent moyen pour produire rapidement de la documentation.  
 Sans trop rentrer dans les détails, c'est un générateur de site statique en Python. On écrit la documentation en MarkDown et la configuration tient dans un fichier YAML.
@@ -14,7 +14,7 @@ Sans trop rentrer dans les détails, c'est un générateur de site statique en P
 # On télécharge la dernière image
 FROM squidfunk/mkdocs-material:latest
 
-# Soit on installe les extensions 1 par 1...
+# Soit on installe les extensions 1 par 1 directement ici...
 RUN pip install mkdocs-mermaid2-plugin
 
 # ...soit on installe les extensions via un fichier requirements.txt.
@@ -36,7 +36,7 @@ mkdocs-mermaid2-plugin==1.1.1
 
 C'est l'unique fichier de configuration ! Version commentée en français [ici](https://github.com/ericECmorlaix/base_mkdocs_material/blob/main/mkdocs.yml)
 
-Au minimum, il faut: 
+Au minimum, il faut ça: 
 
 ```yml
 site_name: Ma super doc !
@@ -70,21 +70,23 @@ Les options de base:
 - `--rm` indique que le container sera supprimé lorsqu'il ne sera arrêté
 - `-it` pour les modes interactif et TTY
 - `-p 8080:8000` pour rediriger ou pas sur un autre port (sortie:entrée). Car le port sera `8000` par défaut
-- `-v ...` pour bind (lier) le volume
+- `-v ...` pour lier le volume
+- `squidfunk/mkdocs-material` pour indiquer l'image
 
 On peut aussi ajouter:
 
 - `-d` pour le mode détaché (le container tourne même si on ferme le terminal)
 - `--restart always` pour permettre au container de se relancer automatiquement si besoin. Mais pas compatible avec `--rm`, il faudra faire un choix !
 - `--name 'mkdocs'` pour personnaliser le nom du container (quand on fait un docker ps, par exemple)
-- `serve -a 0.0.0.0:1234` (à la suite de `squidfunk/mkdocs-material`) pour personnaliser le port 
+- `serve -a 0.0.0.0:1234` (à la suite de l'image) pour personnaliser le port 
 
 Pour la doc officielle, c'est par [ici](https://docs.docker.com/reference/cli/docker/container/run/)
 
 ### 2. En production
 
 A la différence de la ligne précédente, cette ligne va uniquement générer la version "statique" du site dans le dossier... `/site`.  
-Ensuite, le contenu de ce dossier devra être copié sur le serveur de prod. Soit de manière "artisanale" (scp, ftp, sftp,...), soit de manière automatique (Script bash, Actions GitHub,...)
+
+Le contenu de ce dossier devra être copié sur le serveur de prod. Soit de manière "artisanale" (scp, ftp, sftp,...), soit de manière automatique (GitHub Pages, par exemple)
 
 `docker run --rm -it -v ${PWD}:/docs squidfunk/mkdocs-material build`
 
